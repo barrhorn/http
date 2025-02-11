@@ -1,0 +1,21 @@
+{
+    "name": "barrhorn/http",
+    "description": "PSR-7 implementation",
+    "type": "library",
+    "require": {
+        "psr/http-message": "2.0.x-dev"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Barrhorn\\Http\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "plvhx",
+            "email": "gandung@slackerc0de.us"
+        }
+    ],
+    "minimum-stability": "dev"
+}
