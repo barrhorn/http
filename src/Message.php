@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This file is part of Barrhorn package.
+ *
+ * (c) Paulus Gandung Prakosa <rvn.plvhx@gmail.com>
+ *
+ * For complete information regarding copyright and licensing for
+ * this source code, please refer to the LICENSE.md file that was included
+ * in this repository.
+ */
+
 declare(strict_types=1);
 
 namespace Barrhorn\Http;
