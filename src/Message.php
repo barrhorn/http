@@ -18,9 +18,12 @@ use InvalidArgumentException;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
+use function array_map;
+use function explode;
 use function is_array;
 use function join;
 use function strtolower;
+use function ucfirst;
 
 /**
  * @author Paulus Gandung Prakosa <rvn.plvhx@gmail.com>
@@ -41,6 +44,49 @@ abstract class Message implements MessageInterface
      * @var array
      */
     private array $headerNames;
+
+    /**
+     * @var array
+     */
+    private array $headerNamesMap = [
+        'accept-ch' => 'Accept-CH',
+        'content-dpr' => 'Content-DPR',
+        'critical-ch' => 'Critical-CH',
+        'dictionary-id' => 'Dictionary-ID',
+        'dnt' => 'DNT',
+        'dpr' => 'DPR',
+        'ect' => 'ECT',
+        'etag' => 'ETag',
+        'expect-ct' => 'Expect-CT',
+        'nel' => 'NEL',
+        'rtt' => 'RTT',
+        'sec-ch-prefers-color-scheme' => 'Sec-CH-Prefers-Color-Scheme',
+        'sec-ch-prefers-reduced-motion' => 'Sec-CH-Prefers-Reduced-Motion',
+        'sec-ch-prefers-reduced-transparency' => 'Sec-CH-Prefers-Reduced-Transparency',
+        'sec-ch-ua' => 'Sec-CH-UA',
+        'sec-ch-ua-arch' => 'Sec-CH-UA-Arch',
+        'sec-ch-ua-bitness' => 'Sec-CH-UA-Bitness',
+        'sec-ch-ua-form-factors' => 'Sec-CH-UA-Form-Factors',
+        'sec-ch-ua-full-version' => 'Sec-CH-UA-Full-Version',
+        'sec-ch-ua-full-version-list' => 'Sec-CH-UA-Full-Version-List',
+        'sec-ch-ua-mobile' => 'Sec-CH-UA-Mobile',
+        'sec-ch-ua-model' => 'Sec-CH-UA-Model',
+        'sec-ch-ua-platform' => 'Sec-CH-UA-Platform',
+        'sec-ch-ua-platform-version' => 'Sec-CH-UA-Platform-Version',
+        'sec-ch-ua-wow64' => 'Sec-CH-UA-WoW64',
+        'sec-gpc' => 'Sec-GPC',
+        'sec-websocket-accept' => 'Sec-WebSocket-Accept',
+        'sec-websocket-extensions' => 'Sec-WebSocket-Extensions',
+        'sec-websocket-key' => 'Sec-WebSocket-Key',
+        'sec-websocket-protocol' => 'Sec-WebSocket-Key',
+        'sec-websocket-version' => 'Sec-WebSocket-Version',
+        'sourcemap' => 'SourceMap',
+        'te' => 'TE',
+        'tk' => 'Tk',
+        'www-authenticate' => 'WWW-Authenticate',
+        'x-dns-prefetch-control' => 'X-DNS-Prefetch-Control',
+        'x-xss-protection' => 'X-XSS-Protection'
+    ];
 
     /**
      * @var \Barrhorn\Http\StreamInterface
@@ -183,5 +229,39 @@ abstract class Message implements MessageInterface
         $cloned = clone $this;
         $cloned->body = $body;
         return $cloned;
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function normalizeHeaderName(string $name): string
+    {
+        if (isset($this->headerNamesMap[$name])) {
+            return $this->headerNamesMap[$name];
+        }
+
+        $splitted = explode('-', $name);
+
+        foreach ($splitted as $key => $elem) {
+            $splitted[$key] = ucfirst($elem);
+        }
+
+        return join('-', $splitted);
+    }
+
+    /**
+     * @param array $source
+     * @param array $added
+     */
+    private function mergeHeaderValues(array $source, array $added): array
+    {
+        $result = $source;
+
+        foreach ($added as $elem) {
+            $result[] = $elem;
+        }
+
+        return $result;
     }
 }
