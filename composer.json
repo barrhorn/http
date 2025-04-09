@@ -1,9 +1,9 @@
 {
     "name": "barrhorn/http",
-    "description": "PSR-7 implementation",
+    "description": "Object oriented layer of HTTP standardization",
     "type": "library",
     "require": {
-        "psr/http-message": "2.0.x-dev"
+        "php": ">=8.3"
     },
     "license": "MIT",
     "autoload": {
@@ -13,8 +13,8 @@
     },
     "authors": [
         {
-            "name": "plvhx",
-            "email": "gandung@slackerc0de.us"
+            "name": "Paulus Gandung Prakosa",
+            "email": "rvn.plvhx@gmail.com"
         }
     ],
     "minimum-stability": "dev"
