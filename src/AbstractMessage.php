@@ -106,6 +106,14 @@ abstract class AbstractMessage implements
     /**
      * {@inheritDoc}
      */
+    public function setProtocolVersion(string $version): void
+    {
+        $this->protocolVersion = $version;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function withProtocolVersion(string $version): MessageInterface
     {
         $cloned = clone $this;
