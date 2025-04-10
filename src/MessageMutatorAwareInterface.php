@@ -45,4 +45,10 @@ interface MessageMutatorAwareInterface
      * @return void
      */
     public function setBody(StreamInterface|resource $body): void;
+
+    /**
+     * @param string $version
+     * @return void
+     */
+    public function setProtocolVersion(string $version): void;
 }
